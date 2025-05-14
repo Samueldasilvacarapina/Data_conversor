@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+  <meta charset="UTF-8">
+  <title>Conversor de Data por Extenso</title>
+  <style>
+    body {
+      margin: 0;
+      background-color: #000;
+      color: #fff;
+      font-family: Arial, Helvetica, sans-serif;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+    }
+
+    .container {
+      background-color: #111;
+      padding: 40px;
+      border-radius: 16px;
+      box-shadow: 0 0 20px #f00;
+      text-align: center;
+      width: 350px;
+    }
+
+    h2 {
+      margin-bottom: 20px;
+      font-size: 22px;
+    }
+
+    input {
+      width: 100%;
+      padding: 12px;
+      font-size: 16px;
+      border: none;
+      border-radius: 8px;
+      background-color: #dcdfe6;
+      color: #000;
+      margin-bottom: 15px;
+      text-align: center;
+    }
+
+    button {
+      width: 100%;
+      padding: 12px;
+      font-size: 16px;
+      background-color: red;
+      color: white;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+      transition: background 0.3s ease;
+      margin-top: 10px;
+    }
+
+    button:hover {
+      background-color: #cc0000;
+    }
+
+    #resultado {
+      margin-top: 20px;
+      background-color: #333;
+      padding: 12px;
+      border-radius: 8px;
+      color: #fff;
+      font-size: 18px;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h2>Conversor de Data por Extenso</h2>
+    <input type="text" id="data" placeholder="Ex: 03/2025 ou 25/12/2023">
+    <button onclick="converter()">Converter</button>
+    <div id="resultado"></div>
+    <button onclick="copiarTexto()">Copiar</button>
+  </div>
+
+  <p style="color: #fff; margin-top: 20px; font-size: 14px; text-align: center;">
+    Criado por Samuel Carapina 🤓
+  </p>
+
+  <script>
+    const meses = [
+      '', 'janeiro', 'fevereiro', 'março', 'abril', 'maio', 'junho',
+      'julho', 'agosto', 'setembro', 'outubro', 'novembro', 'dezembro'
+    ];
+
+    function converter() {
+      const input = document.getElementById("data").value.trim();
+      const partes = input.split("/");
+      let resultado = "Data inválida!";
+
+      if (partes.length === 2) {
+        const [mes, ano] = partes;
+        const mesInt = parseInt(mes);
+        const nomeMes = meses[mesInt];
+        if (nomeMes && ano) {
+          resultado = `${nomeMes} de ${ano}`;
+        }
+      } else if (partes.length === 3) {
+        const [dia, mes, ano] = partes;
+        const mesInt = parseInt(mes);
+        const diaInt = parseInt(dia);
+        const nomeMes = meses[mesInt];
+        if (nomeMes && diaInt && ano) {
+          resultado = `${diaInt} de ${nomeMes} de ${ano}`;
+        }
+      }
+
+      document.getElementById("resultado").innerText = resultado;
+    }
+
+    function copiarTexto() {
+      const texto = document.getElementById("resultado").innerText;
+      if (texto && texto !== "Data inválida!") {
+        navigator.clipboard.writeText(texto).then(() => {
+          alert("Copiado para a área de transferência!");
+        });
+      }
+    }
+  </script>
+</body>
+</html>
